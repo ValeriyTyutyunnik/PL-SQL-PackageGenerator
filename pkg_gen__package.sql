@@ -176,14 +176,14 @@ create or replace package body pkg_gen as
   lf  constant varchar2(1 char) := chr(10);
   lf2 constant varchar2(2 char) := lf || lf;
 
-  type col_rec is record (column_name     varchar2(128),
-                          data_type       varchar2(128),
-                          data_precision  number,
-                          data_scale      number,
-                          char_length     number,
-                          char_used       varchar2(1),
-                          virtual_column  varchar2(3),
-                          nullable        varchar2(1));
+  type col_rec is record (column_name     all_tab_cols.column_name%type,
+                          data_type       all_tab_cols.data_type%type,
+                          data_precision  all_tab_cols.data_precision%type,
+                          data_scale      all_tab_cols.data_scale%type,
+                          char_length     all_tab_cols.char_length%type,
+                          char_used       all_tab_cols.char_used%type,
+                          virtual_column  all_tab_cols.virtual_column%type,
+                          nullable        all_tab_cols.nullable%type);
 
   type cols_tbl is table of col_rec index by pls_integer;
 
@@ -194,7 +194,7 @@ create or replace package body pkg_gen as
   -- this collections and variables  will reset whenever procedure "init" executed
   g_select_excluded_cols varchar_tbl := varchar_tbl();
   g_update_excluded_cols varchar_tbl := varchar_tbl();
-  g_table_name    varchar2(128);
+  g_table_name    all_tables.table_name%type;
   g_alias         varchar2(1);
   g_pk_column_rec col_rec;
   g_columns_tbl   cols_tbl;
@@ -408,8 +408,8 @@ create or replace package body pkg_gen as
                  p_pkg_name       varchar2 default null,
                  p_name_chr_limit integer  default null)
   is
-    l_table_name varchar2(128);
-    l_owner      varchar2(128);
+    l_table_name all_tables.table_name%type;
+    l_owner      all_constraints.owner%type;
   begin
     g_initialized := false;
     g_chr_limit := 30;
