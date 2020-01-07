@@ -67,9 +67,10 @@ declare
   /**
    * Set documentation format you need or leave it empty to leave code without documentation.
    * Availablable documentation snippets:
-   *   {author} - substitutes the value of a variable doc_author
-   *   {name}   - programm name
-   *   {params} - all programm parameters line by line with str_before_param_tag data at begin of line
+   *   {author}       - substitutes the value of a variable doc_author
+   *   {name}         - programm name
+   *   {params}       - all programm parameters line by line with str_before_param_tag data at begin of line
+   *   {cs1} .. {cs5} - custom snippets
    */
 
   pkg_doc              varchar2(1000 char);
@@ -77,6 +78,11 @@ declare
   func_doc             varchar2(1000 char);
   str_before_param_tag varchar2(10 char);
   doc_author           varchar2(100 char);
+  custom_snippet_1     varchar2(1000 char);
+  custom_snippet_2     varchar2(1000 char);
+  custom_snippet_3     varchar2(1000 char);
+  custom_snippet_4     varchar2(1000 char);
+  custom_snippet_5     varchar2(1000 char);
 
 
   /**********************************************
@@ -175,7 +181,7 @@ declare
   end get_declaration_type;
 
   /**
-   * replaces snippets at documentation template
+   * Replaces snippets at documentation template.
    * @param p_doc  - documetation template
    * @param p_name - name of the documented object
    */
@@ -188,6 +194,11 @@ declare
     if p_doc is not null then
       l_result := replace(p_doc, '{author}', doc_author);
       l_result := replace(l_result, '{name}', p_name);
+      l_result := replace(l_result, '{cs1}', custom_snippet_1);
+      l_result := replace(l_result, '{cs2}', custom_snippet_2);
+      l_result := replace(l_result, '{cs3}', custom_snippet_3);
+      l_result := replace(l_result, '{cs4}', custom_snippet_4);
+      l_result := replace(l_result, '{cs5}', custom_snippet_5);
     end if;
 
     return l_result;
