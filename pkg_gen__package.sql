@@ -53,13 +53,15 @@ create or replace package pkg_gen as
    *   {author}       - substitutes the value of a variable doc_author
    *   {name}         - programm name
    *   {params}       - all programm parameters line by line with str_before_param_tag data at begin of line
+   *                    and str_after_param_tag at the end of it
    *   {cs1} .. {cs5} - custom snippets
    */
 
   pkg_doc              varchar2(1000 char);
   proc_doc             varchar2(1000 char);
   func_doc             varchar2(1000 char);
-  str_before_param_tag varchar2(10 char);
+  str_before_param_tag varchar2(100 char);
+  str_after_param_tag  varchar2(100 char);
   doc_author           varchar2(100 char);
   custom_snippet_1     varchar2(1000 char);
   custom_snippet_2     varchar2(1000 char);
@@ -316,7 +318,7 @@ create or replace package body pkg_gen as
           if i > 1 then
             l_tmp := l_tmp || lf;
           end if;
-          l_tmp := l_tmp || str_before_param_tag || p_params(i);
+          l_tmp := l_tmp || str_before_param_tag || p_params(i) || str_after_param_tag;
         end loop;
         l_result := replace(l_result, '{params}', l_tmp);
       end if;
