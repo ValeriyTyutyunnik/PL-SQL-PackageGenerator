@@ -15,7 +15,7 @@ Make the calls you need with the necessary parameters in the begin block .. end 
 ## How to use
 Procedure and Function descriptions with input and output parameters are located in package definition script.
 
-Additional script with examples is available in "examples" directory (in development)
+Additional script with examples is available in "examples" directory
 
 ## How it works
 The application can be use to create package with lot of simple functions and procedures for working with one table.
